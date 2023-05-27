@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  xray: 
+    image: teddysun/xray
+    ports: 
+      - '18000:18000'   #vless
+      - '18001:1801'    #vmess
+    volumes:
+      - ./xray-config.json:/etc/xray/config.json
+  
+  caddy:
+    images: caddy
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes: 
+      - ./Caddyfile:/etc/caddy/Caddyfile

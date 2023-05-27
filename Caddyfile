@@ -1,0 +1,4 @@
+localhost {
+    reverse_proxy /01234/vless xray:18000
+    reverse_proxy /01234/vmess xray:18001
+}
