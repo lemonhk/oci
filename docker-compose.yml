@@ -2,17 +2,27 @@ version: "3.8"
 
 services:
   xray: 
+    restart: always
     image: teddysun/xray
     ports: 
       - '18000:18000'   #vless
-      - '18001:1801'    #vmess
+      - '18001:18001'    #vmess
+    network_mode: "host"
     volumes:
       - ./xray-config.json:/etc/xray/config.json
+    # expose:
+    #   - {{ PROXY_PORT: number }}
   
   caddy:
+    restart: always
     images: caddy
     ports:
       - '80:80'
       - '443:443'
+    network_mode: "host"
+    working_dir: /etc
+    depends_on:
+      - v2ray
     volumes: 
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./index.html:/etc/index.html
